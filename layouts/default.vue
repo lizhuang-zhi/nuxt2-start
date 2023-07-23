@@ -1,7 +1,7 @@
 <template>
   <div>
-    <Header></Header>
-    <nuxt />
+    <common-left-menu></common-left-menu>
+    <common-body></common-body>
   </div>
 </template>
   
