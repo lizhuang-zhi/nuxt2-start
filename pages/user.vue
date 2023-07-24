@@ -2,13 +2,9 @@
   <div class="user_page">
     <div class="title">User Page</div>
     <div class="cont">
-      <div>水电费水电费水电费水电费水电费发生的</div>
-      <div>123123123</div>
-      <div>1231是短发萨的飞机发射佛啊说23123</div>
-      <div>123123123</div>
-      <div>是短发松紧的飞机哦我</div>
-      <div>123123123</div>
-      <div>123123123</div>
+      <div v-for="(item, index) in userList" :key="index">
+        <div>{{ index }}.{{ item.Username }}.{{ item.Email }}</div>
+      </div>
     </div>
   </div>
 </template>
@@ -17,6 +13,24 @@
 import CommonBody from "../components/CommonBody.vue";
 export default {
   components: { CommonBody },
+  data() {
+    return {
+      message: "message in data",
+    };
+  },
+  // 初始化之前执行,所以函数中不能使用this
+  async asyncData({ app }) {
+    const response = await app.$axios.$get("http://localhost:8000/alluser");
+    if (response.code == 0) {
+      return { userList: response.data };
+    } else {
+      return { userList: [] };
+    }
+  },
+  mounted() {
+    // 此时获取到的this中包含message和userList
+    console.log(this);
+  },
 };
 </script>
 
