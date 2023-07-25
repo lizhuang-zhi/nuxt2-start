@@ -1,6 +1,7 @@
 <template>
   <div class="common_left_menu">
     <nuxt-link to="/user">User Page</nuxt-link>
+    <nuxt-link to="/log">Log Page</nuxt-link>
     <nuxt-link to="/clients">Clients Page</nuxt-link>
     <nuxt-link to="/index">Index Page</nuxt-link>
   </div>
