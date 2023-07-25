@@ -9,33 +9,38 @@
       <h3 class="update_info">更新用户数据</h3>
       <div class="update">
         <span>ID:</span>
-        <input type="text" v-model="id">
+        <input type="text" v-model="id" />
       </div>
       <div class="update">
         <span>Name:</span>
-        <input type="text" v-model="name">
+        <input type="text" v-model="name" />
       </div>
       <div class="update">
         <span>Email:</span>
-        <input type="text" v-model="email">
+        <input type="text" v-model="email" />
       </div>
+      <div v-show="udpateInfo != ''">{{ udpateInfo }}</div>
       <button @click="update">修改用户信息</button>
     </div>
   </div>
 </template>
 
 <script>
+import { getAllUser, updateUser } from "@/api/request.js";
 import CommonBody from "../components/CommonBody.vue";
 export default {
   components: { CommonBody },
   data() {
     return {
-      message: "message in data",
+      id: "",
+      name: "",
+      email: "",
+      udpateInfo: "",
     };
   },
   // 初始化之前执行,所以函数中不能使用this
-  async asyncData({ app }) {
-    const response = await app.$axios.$get("http://localhost:8000/user/alluser");
+  async asyncData() {
+    const response = await getAllUser();
     if (response.code == 0) {
       return { userList: response.data };
     } else {
@@ -43,12 +48,18 @@ export default {
     }
   },
   mounted() {
-    // 此时获取到的this中包含message和userList
+    // 此时获取到的this.data中包含userList
   },
   methods: {
-    update() {
+    async update() {
+      const res = await updateUser({
+        id: this.id,
+        name: this.name,
+        email: this.email,
+      });
+      this.udpateInfo = res.message;
     },
-  }
+  },
 };
 </script>
 
