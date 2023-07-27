@@ -4,6 +4,7 @@
     <nuxt-link to="/log">Log Page</nuxt-link>
     <nuxt-link to="/clients">Clients Page</nuxt-link>
     <nuxt-link to="/index">Index Page</nuxt-link>
+    <nuxt-link to="/finish">What I Do</nuxt-link>
   </div>
 </template>
 

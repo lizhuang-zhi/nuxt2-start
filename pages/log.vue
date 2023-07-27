@@ -3,7 +3,7 @@
     <div class="title">Log Page</div>
     <div class="cont">
       <div v-for="(item, index) in apiLog" :key="index">
-        <div>{{item}}</div>
+        <div>{{item.id}}. {{ item.path }} || {{ item.method }} || {{ item.user }}</div>
       </div>
     </div>
   </div>
@@ -18,7 +18,7 @@ export default {
     };
   },
   async asyncData({ app }) {
-    const response = await app.$axios.$get("http://localhost:8000/log");
+    const response = await app.$axios.$get("http://localhost:8000/log/all");
     return {apiLog: response.data}
   },
   mounted() {
