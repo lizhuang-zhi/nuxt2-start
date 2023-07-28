@@ -20,7 +20,7 @@
         <input type="text" v-model="email" />
       </div>
       <div v-show="udpateInfo != ''">{{ udpateInfo }}</div>
-      <button @click="update">修改用户信息</button>
+      <van-button type="primary" @click="update">修改用户信息</van-button>
     </div>
   </div>
 </template>
@@ -51,13 +51,21 @@ export default {
     // 此时获取到的this.data中包含userList
   },
   methods: {
-    async update() {
-      const res = await updateUser({
+    update() {
+      updateUser({
         id: this.id,
         name: this.name,
         email: this.email,
-      });
-      this.udpateInfo = res.message;
+      })
+        .then((res) => {
+          console.log(res);
+          this.$toast("更新成功");
+          this.udpateInfo = res.message;
+        })
+        .catch((err) => {
+          console.log(err);
+          this.$toast("更新失败");
+        });
     },
   },
 };

@@ -66,6 +66,7 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     `~/plugins/myPlugin.js`,
+    { src: '@/plugins/vant', ssr: true }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

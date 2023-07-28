@@ -1,26 +1,29 @@
 <template>
-  <div>
-    <h1>Home Page</h1>
-    <!-- 使用 bootstrap-vue -->
-    <b-alert show>Default Alert</b-alert>
-    <b-button variant="success" @click="$myCustomApiPlugin.call()">Say Hello from plugin</b-button>
-    <Header></Header>
-    <Dashboard />
-    <DashboardButton />
-    <DashboardButtonIcon />
+  <div class="user_page">
+    <div class="title">Index Page</div>
+    <div class="cont">
+      首页内容
+    </div>
   </div>
 </template>
 
 <script>
+import CommonBody from "../components/CommonBody.vue";
 export default {
-  name: "IndexPage",
-  // 设置 myDashboard 布局
-  layout: "myDashboard",
-  head: {
-    title: "This is the Home Page",
+  components: { CommonBody },
+  data() {
+    return {
+    };
   },
-  mounted() {
-    console.log(this.$myCustomApiPlugin);
-  }
-}; 
+};
 </script>
+
+<style lang="less" scoped>
+.user_page {
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+  }
+}
+</style>
