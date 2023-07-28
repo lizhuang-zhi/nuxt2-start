@@ -7,3 +7,7 @@ export function getAllUser() {
 export function updateUser(data) {
     return myaxios.post("/user/update", data)
 }
+
+export function insertTask(data) {
+    return myaxios.post("/task/insert", data)
+}

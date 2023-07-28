@@ -20,8 +20,16 @@
           label="输入任务内容"
           placeholder="请输入任务内容.."
         />
-        <van-button style="margin-right: 10px;" type="primary" size="small" @click="create">创建</van-button>
-        <van-button type="info" size="small" @click="taskCont == ''">重置</van-button>
+        <van-button
+          style="margin-right: 10px"
+          type="primary"
+          size="small"
+          @click="create"
+          >创建</van-button
+        >
+        <van-button type="info" size="small" @click="taskCont == ''"
+          >重置</van-button
+        >
       </div>
     </div>
   </div>
@@ -29,6 +37,7 @@
   
   <script>
 import CommonBody from "../components/CommonBody.vue";
+import { insertTask } from "@/api/request";
 export default {
   components: { CommonBody },
   data() {
@@ -71,14 +80,20 @@ export default {
       if (this.taskCont == "") {
         this.$toast("请输入任务内容");
       } else {
-        this.finished.push({
-          title: this.taskCont,
-          finished: false,
-        });
-        this.taskCont = "";
+        insertTask({
+          task_name: this.taskCont,
+          is_finished: false,
+        })
+          .then((res) => {
+            this.taskCont = "";
+            this.$toast("创建任务成功");
+          })
+          .catch((err) => {
+            this.$toast("创建任务失败");
+          });
       }
-    }
-  }
+    },
+  },
 };
 </script>
   
