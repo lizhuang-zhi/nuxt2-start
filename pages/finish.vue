@@ -37,7 +37,7 @@
   
   <script>
 import CommonBody from "../components/CommonBody.vue";
-import { insertTask } from "@/api/request";
+import { insertTask, getAllTask } from "@/api/request";
 export default {
   components: { CommonBody },
   data() {
@@ -74,6 +74,19 @@ export default {
       ],
       taskCont: "",
     };
+  },
+  async asyncData() {
+    // asyncData方法会在server端和client端都执行
+    const res = await getAllTask();
+    return {taskList: res.data}
+  },
+  mounted() {
+    for(let item of this.taskList) {
+      this.finished.push({
+        title: item.task_name,
+        finished: item.is_finished
+      })
+    }
   },
   methods: {
     create() {

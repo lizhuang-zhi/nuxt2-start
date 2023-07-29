@@ -11,3 +11,7 @@ export function updateUser(data) {
 export function insertTask(data) {
     return myaxios.post("/task/insert", data)
 }
+
+export function getAllTask() {
+    return myaxios.get("/task/all")
+}
