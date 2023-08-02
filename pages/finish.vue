@@ -4,12 +4,13 @@
     <div class="cont">
       <div class="strip_box" v-for="(item, index) in finished" :key="index">
         <div class="strip">{{ index + 1 }}. {{ item.title }}</div>
-        <div class="finish" v-show="item.finished == false">
-          {{ item.finished }}
-        </div>
-        <div class="finished" v-show="item.finished == true">
-          {{ item.finished }}
-        </div>
+        <!-- 单选框 -->
+        <van-checkbox
+          class="finish"
+          v-model="item.finished"
+          @click="clickFinish(item)"
+          >是否完成任务</van-checkbox
+        >
       </div>
     </div>
     <div class="create_task">
@@ -42,50 +43,26 @@ export default {
   components: { CommonBody },
   data() {
     return {
-      finished: [
-        {
-          title: "前端下拉触底, 后端分页请求[log模块]",
-          finished: false,
-        },
-        {
-          title: "token验证流程[首页]",
-          finished: false,
-        },
-        {
-          title: "使用Vant2",
-          finished: true,
-        },
-        {
-          title: "国际化文本缩放组件可用性",
-          finished: false,
-        },
-        {
-          title: "虚拟列表",
-          finished: false,
-        },
-        {
-          title: "将该列表写入数据库",
-          finished: false,
-        },
-        {
-          title: "添加权限，只有admin可编辑",
-          finished: false,
-        },
-      ],
+      finished: [],
       taskCont: "",
     };
   },
   async asyncData() {
     // asyncData方法会在server端和client端都执行
-    const res = await getAllTask();
-    return {taskList: res.data}
+    const res = await getAllTask({
+      page_index: 1,
+      page_size: 10,
+    });
+    return { taskList: res.data };
   },
   mounted() {
-    for(let item of this.taskList) {
-      this.finished.push({
-        title: item.task_name,
-        finished: item.is_finished
-      })
+    if (this.taskList && this.taskList.length > 0) {
+      for (let item of this.taskList) {
+        this.finished.push({
+          title: item.task_name,
+          finished: item.is_finished,
+        });
+      }
     }
   },
   methods: {
@@ -105,6 +82,20 @@ export default {
             this.$toast("创建任务失败");
           });
       }
+    },
+    clickFinish(item) {
+      this.$dialog
+        .confirm({
+          title: "提示",
+          message: "是否完成任务",
+        })
+        .then(() => {
+          // 请求接口
+          // item.finished = true;
+        })
+        .catch(() => {
+          item.finished = false;
+        });
     },
   },
 };
@@ -130,12 +121,8 @@ export default {
         width: 100%;
       }
       .finish {
-        width: 20%;
+        width: 35%;
         color: orangered;
-      }
-      .finished {
-        width: 20%;
-        color: blue;
       }
     }
   }
