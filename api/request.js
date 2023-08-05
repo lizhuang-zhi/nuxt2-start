@@ -31,3 +31,11 @@ export function getAllTask(params) {
         params: params
     })
 }
+
+export function udpateTask(data) {
+    return request({
+        url: '/task/update',
+        method: 'post',
+        data: data
+    })
+}

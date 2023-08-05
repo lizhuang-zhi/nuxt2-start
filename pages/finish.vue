@@ -38,7 +38,7 @@
   
   <script>
 import CommonBody from "../components/CommonBody.vue";
-import { insertTask, getAllTask } from "@/api/request";
+import { insertTask, getAllTask, udpateTask } from "@/api/request";
 export default {
   components: { CommonBody },
   data() {
@@ -61,6 +61,7 @@ export default {
         this.finished.push({
           title: item.task_name,
           finished: item.is_finished,
+          id: item.id,
         });
       }
     }
@@ -87,11 +88,19 @@ export default {
       this.$dialog
         .confirm({
           title: "提示",
-          message: "是否完成任务",
+          message: "改变任务状态?",
         })
-        .then(() => {
-          // 请求接口
-          // item.finished = true;
+        .then(async () => {
+          let result = await udpateTask({
+            id: item.id,
+            is_finished: item.finished,
+            task_name: item.title,
+          });
+          if (result.code == 0) {
+            this.$toast("修改成功");
+          } else {
+            this.$toast("修改失败");
+          }
         })
         .catch(() => {
           item.finished = false;
